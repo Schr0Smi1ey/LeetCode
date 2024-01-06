@@ -1,10 +1,22 @@
 class Solution {
 public:
-    bool increasingTriplet(vector<int>& nums) {
+
+    int solve(vector<int>&nums,int n,int ind,int prev,vector<vector<int>> &dp){
+        if(ind == n) return 0;
+        if(dp[ind][prev+1] != -1){
+            return dp[ind][prev+1];
+        }
+        int len = 0 + solve(nums,n,ind+1,prev,dp);
+        if(prev == -1 || nums[ind] > nums[prev]){
+            len = max(len,1 + solve(nums,n,ind+1,ind,dp));
+        }
+        return dp[ind][prev+1] = len;
+    }
+    int lengthOfLIS(vector<int>& nums) {
         // int n = nums.size();
         // vector<int> temp;
         // temp.push_back(nums[0]);
-        // for(int i=1;i<n;i++){
+        // for(int i=1;i < n;i++){
         //     if(nums[i] > temp.back()){
         //         temp.push_back(nums[i]);
         //     }
@@ -13,19 +25,10 @@ public:
         //         temp[ind] = nums[i];
         //     }
         // }
-        // return temp.size() >= 3;
-        
+        // return temp.size();
+
         int n = nums.size();
-        int a = INT_MAX,b = INT_MAX;
-        for(auto x : nums){
-            if(x <= a){
-                a = x;
-            }
-            else if(x <= b){
-                b = x;
-            }
-            else return true;
-        }
-        return false;
+        vector<vector<int>> dp(n,vector<int>(n+1,-1));
+        return solve(nums,n,0,-1,dp);
     }
 };
