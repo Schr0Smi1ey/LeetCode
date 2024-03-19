@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int search(int n){
+    int pivotInteger(int n) {
         int low = 1,high = n;
         while(low <= high){
             int mid = (high + low)/2;
@@ -17,8 +17,5 @@ public:
             }
         }
         return -1;
-    }
-    int pivotInteger(int n) {
-        return search(n);
     }
 };
